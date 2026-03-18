@@ -74,8 +74,8 @@
     <!-- AOS CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
-    <!-- Fancybox CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <!-- GLightbox CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css" />
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -105,6 +105,10 @@
     <style>
       section {
         overflow: hidden;
+      }
+      /* Allow gallery section to not clip lightbox triggers */
+      #gallery {
+        overflow: visible;
       }
 
       body {
@@ -648,35 +652,35 @@
         </div>
 
         <div class="gallery-grid" id="gallery-grid" data-aos="fade-up" data-aos-delay="100">
-          <a href="./images/kartu-nama.jpeg" data-fancybox="gallery" class="gallery-thumb rounded-xl overflow-hidden relative group col-span-2 row-span-2 ring-1 ring-[#1fa2ff]/30 shadow-[0_0_20px_rgba(31,162,255,0.15)]">
+          <a href="./images/kartu-nama.jpeg" class="glightbox gallery-thumb rounded-xl overflow-hidden relative group col-span-2 row-span-2 ring-1 ring-[#1fa2ff]/30 shadow-[0_0_20px_rgba(31,162,255,0.15)]" data-gallery="portfolio">
             <img src="./images/kartu-nama.jpeg" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover" />
             <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
           </a>
-          <a href="./images/(1).jpeg" data-fancybox="gallery" class="gallery-thumb rounded-xl overflow-hidden relative group ">
+          <a href="./images/(1).jpeg" class="glightbox gallery-thumb rounded-xl overflow-hidden relative group" data-gallery="portfolio">
             <img src="./images/(1).jpeg" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover" />
             <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
           </a>
-          <a href="./images/(41).jpeg" data-fancybox="gallery" class="gallery-thumb rounded-xl overflow-hidden relative group ">
+          <a href="./images/(41).jpeg" class="glightbox gallery-thumb rounded-xl overflow-hidden relative group" data-gallery="portfolio">
             <img src="./images/(41).jpeg" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover" />
             <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
           </a>
-          <a href="./images/(42).jpeg" data-fancybox="gallery" class="gallery-thumb rounded-xl overflow-hidden relative group ">
+          <a href="./images/(42).jpeg" class="glightbox gallery-thumb rounded-xl overflow-hidden relative group" data-gallery="portfolio">
             <img src="./images/(42).jpeg" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover" />
             <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
           </a>
-          <a href="./images/(43).jpeg" data-fancybox="gallery" class="gallery-thumb rounded-xl overflow-hidden relative group ">
+          <a href="./images/(43).jpeg" class="glightbox gallery-thumb rounded-xl overflow-hidden relative group" data-gallery="portfolio">
             <img src="./images/(43).jpeg" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover" />
             <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
           </a>
-          <a href="./images/(44).jpeg" data-fancybox="gallery" class="gallery-thumb rounded-xl overflow-hidden relative group ">
+          <a href="./images/(44).jpeg" class="glightbox gallery-thumb rounded-xl overflow-hidden relative group" data-gallery="portfolio">
             <img src="./images/(44).jpeg" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover" />
             <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
           </a>
-          <a href="./images/(45).jpeg" data-fancybox="gallery" class="gallery-thumb rounded-xl overflow-hidden relative group ">
+          <a href="./images/(45).jpeg" class="glightbox gallery-thumb rounded-xl overflow-hidden relative group" data-gallery="portfolio">
             <img src="./images/(45).jpeg" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover" />
             <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
           </a>
-          <a href="./images/(46).jpeg" data-fancybox="gallery" class="gallery-thumb rounded-xl overflow-hidden relative group ">
+          <a href="./images/(46).jpeg" class="glightbox gallery-thumb rounded-xl overflow-hidden relative group" data-gallery="portfolio">
             <img src="./images/(46).jpeg" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover" />
             <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
           </a>
@@ -709,9 +713,10 @@
         for(var i = idx; i < end; i++) {
           var a = document.createElement('a');
           a.href = data[i].p;
-          a.setAttribute('data-fancybox','gallery');
-          a.className = 'gallery-thumb rounded-xl overflow-hidden relative group';
+          a.className = 'glightbox gallery-thumb rounded-xl overflow-hidden relative group';
+          a.setAttribute('data-gallery','portfolio');
           if(data[i].v) {
+            a.setAttribute('data-type','video');
             a.innerHTML = '<video src="'+data[i].p+'" class="w-full h-full object-cover" preload="metadata" muted></video><div class="absolute inset-0 bg-black/40 flex items-center justify-center"><i class="ph-fill ph-play-circle text-4xl text-white/80"></i></div>';
           } else {
             a.innerHTML = '<img src="'+data[i].p+'" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover" /><div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>';
@@ -721,8 +726,18 @@
         grid.appendChild(frag);
         idx = end;
         if(idx >= data.length) wrap.style.display='none';
-        // Re-init fancybox
-        if(typeof Fancybox !== 'undefined') Fancybox.bind('[data-fancybox="gallery"]');
+        // Re-init GLightbox after adding new elements
+        if(window.galleryLightbox) window.galleryLightbox.destroy();
+        window.galleryLightbox = GLightbox({
+          selector: '.glightbox',
+          touchNavigation: true,
+          loop: true,
+          openEffect: 'fade',
+          closeEffect: 'fade',
+          cssEf498: 'fade',
+        });
+        window.galleryLightbox.on('open', function(){ if(typeof lenis!=='undefined') lenis.stop(); });
+        window.galleryLightbox.on('close', function(){ if(typeof lenis!=='undefined') lenis.start(); });
       }
 
       if(btn) btn.addEventListener('click', loadMore);
@@ -880,26 +895,26 @@
       requestAnimationFrame(raf);
     </script>
 
-
-    <!-- Fancybox JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <!-- GLightbox JS -->
+    <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/js/glightbox.min.js"></script>
     <script>
-      Fancybox.bind('[data-fancybox="gallery"]', {
-        Toolbar: {
-            display: {
-                left: ["infobar"],
-                middle: [
-                    "zoomIn",
-                    "zoomOut",
-                    "toggle1to1",
-                    "rotateCCW",
-                    "rotateCW",
-                    "flipX",
-                    "flipY",
-                ],
-                right: ["slideshow", "thumbs", "close"],
-            },
+      window.galleryLightbox = GLightbox({
+        selector: '.glightbox',
+        touchNavigation: true,
+        loop: true,
+        openEffect: 'fade',
+        closeEffect: 'fade',
+        cssEfects: {
+          fade: { in: 'fadeIn', out: 'fadeOut' },
         },
+        preload: false,
+      });
+      // Pause Lenis when lightbox opens, resume on close
+      window.galleryLightbox.on('open', function() {
+        if (typeof lenis !== 'undefined') lenis.stop();
+      });
+      window.galleryLightbox.on('close', function() {
+        if (typeof lenis !== 'undefined') lenis.start();
       });
     </script>
 
