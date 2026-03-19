@@ -227,7 +227,7 @@
 
     /* Brand section */
     .brand-section-bg {
-      background: linear-gradient(180deg, transparent 0%, rgba(31, 44, 80, 0.55) 20%, rgba(31, 44, 80, 0.75) 50%, rgba(31, 44, 80, 0.55) 80%, transparent 100%);
+      background: transparent;
       position: relative;
       overflow: hidden;
     }
@@ -235,11 +235,12 @@
     .brand-section-bg::before {
       content: '';
       position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px;
+      height: 350px;
+      background: radial-gradient(ellipse, rgba(31, 162, 255, 0.06) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -250,24 +251,37 @@
       left: -10%;
       width: 400px;
       height: 400px;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.04) 0%, transparent 70%);
       pointer-events: none;
     }
 
     .brand-marquee-wrap {
-      overflow: hidden;
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-      mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
     }
+    .brand-marquee-wrap::-webkit-scrollbar { display: none; }
 
     .brand-track {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.25rem;
       animation: marquee 20s linear infinite;
+      touch-action: pan-x;
     }
 
-    .brand-track:hover {
+    .brand-track:hover,
+    .brand-track:active,
+    .brand-track.touch-active {
       animation-play-state: paused;
+    }
+
+    @media (min-width: 768px) {
+      .brand-marquee-wrap {
+        overflow: hidden;
+      }
     }
 
     @keyframes marquee {
@@ -291,14 +305,27 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 140px;
-      height: 64px;
+      min-width: 120px;
+      height: 56px;
+    }
+
+    @media (min-width: 768px) {
+      .brand-pill {
+        min-width: 140px;
+        height: 64px;
+      }
     }
 
     .brand-pill img {
-      max-height: 36px;
+      max-height: 32px;
       width: auto;
       object-fit: contain;
+    }
+
+    @media (min-width: 768px) {
+      .brand-pill img {
+        max-height: 36px;
+      }
     }
 
     .brand-pill:hover {
@@ -610,7 +637,7 @@
       <!-- Logo -->
       <div data-aos="fade-down" data-aos-duration="1000" class="mb-8">
         <img src="./logo-white-tp.png" alt="Anwar Technology Logo"
-          class="h-16 md:h-24 w-auto filter drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]" />
+          class="h-24 md:h-32 w-auto filter drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]" />
       </div>
 
       <!-- Trust Badge -->
@@ -1572,6 +1599,27 @@
         identitasLightbox.on('close', function () { if (typeof lenis !== 'undefined') lenis.start(); });
       }
     });
+  </script>
+
+  <script>
+    // Brand marquee: touch-scrollable + infinite loop on mobile
+    (function() {
+      var wrap = document.querySelector('.brand-marquee-wrap');
+      var track = document.querySelector('.brand-track');
+      if (!wrap || !track) return;
+      wrap.addEventListener('touchstart', function() {
+        track.classList.add('touch-active');
+      }, { passive: true });
+      wrap.addEventListener('touchend', function() {
+        var half = wrap.scrollWidth / 2;
+        if (wrap.scrollLeft >= half) { wrap.scrollLeft -= half; }
+        track.classList.remove('touch-active');
+      }, { passive: true });
+      wrap.addEventListener('scroll', function() {
+        var half = wrap.scrollWidth / 2;
+        if (wrap.scrollLeft >= half) { wrap.scrollLeft -= half; }
+      }, { passive: true });
+    })();
   </script>
 
   <!-- Get in Touch -->
