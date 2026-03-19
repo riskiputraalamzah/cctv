@@ -25,25 +25,28 @@
   <meta property="og:title" content="Anwar Technology - CCTV & Sistem Jaringan Cerdas" />
   <meta property="og:description"
     content="Layanan pemasangan teknologi terandal. CCTV, Jaringan Internet, Listrik, Telepon & Gas Medis. Hubungi Anwar Tech!" />
-  <meta property="og:image" content="https://anwartechnology.com/logo-white-tp.png" />
+  <meta property="og:image" content="https://anwartechnology.com/logo-white-tp.webp" />
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://anwartechnology.com/" />
   <meta property="twitter:title" content="Anwar Technology - CCTV & Sistem Jaringan Cerdas" />
   <meta property="twitter:description" content="Layanan pemasangan teknologi terandal. Hubungi Anwar Tech Sidoarjo!" />
-  <meta property="twitter:image" content="https://anwartechnology.com/logo-white-tp.png" />
+  <meta property="twitter:image" content="https://anwartechnology.com/logo-white-tp.webp" />
 
   <!-- Favicon -->
-  <link rel="icon" href="./logo-white-tp.png" type="image/png" />
+  <link rel="icon" href="./assets/img/logo-white-tp.png" type="image/png" />
+
+  <!-- Preload LCP image -->
+  <link rel="preload" as="image" href="./assets/img/logo-white-tp.png" fetchpriority="high" />
 
   <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Phosphor Icons -->
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Phosphor Icons (deferred) -->
+  <script src="https://unpkg.com/@phosphor-icons/web" defer></script>
 
   <!-- AOS CSS -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
@@ -76,547 +79,7 @@
     };
   </script>
 
-  <style>
-    section {
-      overflow: hidden;
-    }
-
-    /* Allow gallery section to not clip lightbox triggers */
-    #gallery {
-      overflow: visible;
-    }
-
-    body {
-      background-color: #0a0f16;
-      color: #d1d5db;
-    }
-
-    /* Hero Grid Background */
-    .hero-grid {
-      position: relative;
-      background-color: #0a0f16;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 80px 80px;
-      background-position: center bottom;
-    }
-
-    .hero-grid::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(circle at center, transparent 0%, #0a0f16 100%);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .text-glow {
-      text-shadow: 0 0 20px rgba(31, 162, 255, 0.5);
-    }
-
-    .card-dark {
-      background-color: rgba(17, 24, 39, 0.6);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: all 0.3s ease;
-    }
-
-    .card-dark:hover {
-      border-color: rgba(31, 162, 255, 0.3);
-      box-shadow: 0 10px 30px -10px rgba(31, 162, 255, 0.1);
-      transform: translateY(-2px);
-    }
-
-    .icon-box {
-      background: rgba(31, 162, 255, 0.1);
-      color: #1fa2ff;
-    }
-
-    .link-row {
-      transition: all 0.2s ease;
-    }
-
-    .link-row:hover {
-      background-color: rgba(31, 162, 255, 0.05);
-      border-color: rgba(31, 162, 255, 0.2);
-    }
-
-    .link-row:hover .icon-arrow {
-      transform: translateX(4px);
-      color: #1fa2ff;
-    }
-
-    /* Gallery Grid */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem;
-    }
-
-    @media (min-width: 768px) {
-      .gallery-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.75rem;
-        grid-auto-rows: 200px;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .gallery-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1rem;
-      }
-    }
-
-    .gallery-thumb {
-      aspect-ratio: 1;
-      background: #111827;
-      cursor: pointer;
-      transform: translateZ(0);
-    }
-
-    @media (min-width: 768px) {
-      .gallery-thumb {
-        aspect-ratio: auto;
-      }
-    }
-
-    .gallery-thumb img,
-    .gallery-thumb video {
-      transition: transform 0.5s ease;
-      will-change: transform;
-    }
-
-    .gallery-thumb:hover img,
-    .gallery-thumb:hover video {
-      transform: scale(1.08);
-    }
-
-    .gallery-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(31, 162, 255, 0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .gallery-thumb:hover .gallery-overlay {
-      opacity: 1;
-    }
-
-    /* Client Logo Grid */
-    .client-badge {
-      background: rgba(17, 24, 39, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(8px);
-      transition: all 0.3s ease;
-    }
-
-    .client-badge:hover {
-      border-color: rgba(31, 162, 255, 0.3);
-      box-shadow: 0 0 20px rgba(31, 162, 255, 0.08);
-      transform: translateY(-2px);
-    }
-
-    /* Brand section */
-    .brand-section-bg {
-      background: transparent;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .brand-section-bg::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 700px;
-      height: 350px;
-      background: radial-gradient(ellipse, rgba(31, 162, 255, 0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .brand-section-bg::after {
-      content: '';
-      position: absolute;
-      bottom: -30%;
-      left: -10%;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.04) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .brand-marquee-wrap {
-      overflow-x: auto;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-    }
-    .brand-marquee-wrap::-webkit-scrollbar { display: none; }
-
-    .brand-track {
-      display: flex;
-      gap: 1.25rem;
-      animation: marquee 20s linear infinite;
-      touch-action: pan-x;
-    }
-
-    .brand-track:hover,
-    .brand-track:active,
-    .brand-track.touch-active {
-      animation-play-state: paused;
-    }
-
-    @media (min-width: 768px) {
-      .brand-marquee-wrap {
-        overflow: hidden;
-      }
-    }
-
-    @keyframes marquee {
-      0% {
-        transform: translateX(0);
-      }
-
-      100% {
-        transform: translateX(-50%);
-      }
-    }
-
-    .brand-pill {
-      flex-shrink: 0;
-      padding: 0.5rem 1.5rem;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 1);
-      border-radius: 50px;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 120px;
-      height: 56px;
-    }
-
-    @media (min-width: 768px) {
-      .brand-pill {
-        min-width: 140px;
-        height: 64px;
-      }
-    }
-
-    .brand-pill img {
-      max-height: 32px;
-      width: auto;
-      object-fit: contain;
-    }
-
-    @media (min-width: 768px) {
-      .brand-pill img {
-        max-height: 36px;
-      }
-    }
-
-    .brand-pill:hover {
-      background: #ffffff;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-    }
-
-    /* Identity showcase grid */
-    .identity-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    @media (min-width: 768px) {
-      .identity-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.25rem;
-      }
-    }
-
-    .identity-card {
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      background: #111827;
-      transition: all 0.4s ease;
-    }
-
-    .identity-card:hover {
-      border-color: rgba(31, 162, 255, 0.25);
-      box-shadow: 0 8px 30px rgba(31, 162, 255, 0.1);
-      transform: translateY(-3px);
-    }
-
-    .identity-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-
-    .identity-card:hover img {
-      transform: scale(1.04);
-    }
-
-    .identity-label {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 1.25rem 1.5rem;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 100%);
-    }
-
-    .identity-label span {
-      color: #fff;
-      font-size: 0.875rem;
-      font-weight: 600;
-    }
-
-    /* Klien card improved */
-    .klien-card {
-      background: linear-gradient(145deg, rgba(17, 24, 39, 0.8) 0%, rgba(15, 23, 42, 0.6) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(12px);
-      border-radius: 1.25rem;
-      padding: 2rem 1.5rem;
-      text-align: center;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .klien-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, #1fa2ff, transparent);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-
-    .klien-card:hover {
-      border-color: rgba(31, 162, 255, 0.25);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(31, 162, 255, 0.08);
-    }
-
-    .klien-card:hover::before {
-      opacity: 1;
-    }
-
-    .klien-card.sekolah .klien-icon {
-      background: rgba(34, 197, 94, 0.1);
-      color: #4ade80;
-    }
-
-    /* Stat counter */
-    .stat-box {
-      text-align: center;
-      padding: 1.5rem;
-    }
-
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #1fa2ff;
-      line-height: 1;
-      text-shadow: 0 0 30px rgba(31, 162, 255, 0.3);
-    }
-
-    .stat-label {
-      font-size: 0.8rem;
-      color: #6b7280;
-      margin-top: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    /* Paket Harga */
-    .paket-tab {
-      color: #9ca3af;
-    }
-
-    .paket-tab.active {
-      background: #1fa2ff;
-      color: #fff;
-      box-shadow: 0 0 18px rgba(31, 162, 255, 0.4);
-    }
-
-    .paket-panel.hidden {
-      display: none;
-    }
-
-    .paket-card {
-      position: relative;
-      background: rgba(17, 24, 39, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 18px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      backdrop-filter: blur(10px);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .paket-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-    }
-
-    .paket-card.featured {
-      border-color: rgba(31, 162, 255, 0.4);
-      box-shadow: 0 0 30px rgba(31, 162, 255, 0.1);
-    }
-
-    .paket-card.featured-green {
-      border-color: rgba(16, 185, 129, 0.4);
-      box-shadow: 0 0 30px rgba(16, 185, 129, 0.1);
-    }
-
-    .paket-card.featured-red {
-      border-color: rgba(239, 68, 68, 0.4);
-      box-shadow: 0 0 30px rgba(239, 68, 68, 0.1);
-    }
-
-    .paket-badge {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      z-index: 2;
-      background: rgba(31, 162, 255, 0.9);
-      color: #fff;
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 3px 10px;
-      border-radius: 50px;
-    }
-
-    .paket-badge.green {
-      background: rgba(16, 185, 129, 0.9);
-    }
-
-    .paket-badge.red {
-      background: rgba(239, 68, 68, 0.9);
-    }
-
-    .paket-header {
-      padding: 1.5rem 1.5rem 1.25rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .paket-cam-badge {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.7);
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 50px;
-      padding: 3px 12px;
-      margin-bottom: 0.5rem;
-    }
-
-    .paket-indi-tag {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.8);
-      background: rgba(0, 0, 0, 0.25);
-      border-radius: 6px;
-      padding: 3px 10px;
-      margin-bottom: 0.5rem;
-      text-align: center;
-    }
-
-    .paket-price {
-      font-size: 2.5rem;
-      font-weight: 900;
-      color: #fff;
-      line-height: 1;
-    }
-
-    .paket-price span {
-      font-size: 1.1rem;
-      font-weight: 700;
-      vertical-align: super;
-      margin-left: 3px;
-    }
-
-    .paket-list {
-      list-style: none;
-      padding: 1.25rem 1.5rem;
-      margin: 0;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .paket-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-      font-size: 0.82rem;
-      color: #d1d5db;
-    }
-
-    .paket-list li i {
-      margin-top: 1px;
-      flex-shrink: 0;
-      font-size: 0.9rem;
-    }
-
-    .paket-btn {
-      display: block;
-      text-align: center;
-      margin: 0 1.25rem 1.25rem;
-      padding: 0.7rem 1.25rem;
-      border-radius: 50px;
-      background: linear-gradient(90deg, #1fa2ff, #1243b4);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.82rem;
-      text-decoration: none;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-    }
-
-    .paket-btn:hover {
-      opacity: 0.85;
-      transform: scale(1.02);
-    }
-
-    .paket-btn.green {
-      background: linear-gradient(90deg, #10b981, #065f46);
-    }
-
-    .paket-btn.red {
-      background: linear-gradient(90deg, #ef4444, #9b1c1c);
-    }
-  </style>
+  <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 
 <body class="font-sans antialiased overflow-x-hidden selection:bg-brand-blue selection:text-white">
@@ -636,7 +99,8 @@
     <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
       <!-- Logo -->
       <div data-aos="fade-down" data-aos-duration="1000" class="mb-8">
-        <img src="./logo-white-tp.png" alt="Anwar Technology Logo"
+        <img src="./assets/img/logo-white-tp.png" width="800" height="800" alt="Anwar Technology Logo"
+          fetchpriority="high"
           class="h-24 md:h-32 w-auto filter drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]" />
       </div>
 
@@ -954,25 +418,25 @@
       <!-- Marquee row 1 -->
       <div class="brand-marquee-wrap mb-4">
         <div class="brand-track pt-4">
-          <span class="brand-pill"><img src="./brand/hikvision.png" alt="HIKVISION" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/dahua.png" alt="Dahua" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/ezviz.png" alt="EZVIZ" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/tindy.webp" alt="Tiandy" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/ruijie.png" alt="Ruijie" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/tplink.png" alt="TP-Link" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/proview.png" alt="PROVIEW" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/imou.png" alt="IMOU" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/hilook.png" alt="HiLook" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/hikvision.png" width="4300" height="864" alt="HIKVISION" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/dahua.png" width="800" height="240" alt="Dahua" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/ezviz.png" width="750" height="253" alt="EZVIZ" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/tindy.webp" width="500" height="144" alt="Tiandy" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/ruijie.png" width="308" height="109" alt="Ruijie" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/tplink.png" width="322" height="137" alt="TP-Link" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/proview.png" width="225" height="91" alt="PROVIEW" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/imou.png" width="432" height="117" alt="IMOU" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/hilook.png" width="404" height="125" alt="HiLook" loading="lazy" /></span>
           <!-- Duplicate -->
-          <span class="brand-pill"><img src="./brand/hikvision.png" alt="HIKVISION" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/dahua.png" alt="Dahua" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/ezviz.png" alt="EZVIZ" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/tindy.webp" alt="Tiandy" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/ruijie.png" alt="Ruijie" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/tplink.png" alt="TP-Link" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/proview.png" alt="PROVIEW" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/imou.png" alt="IMOU" loading="lazy" /></span>
-          <span class="brand-pill"><img src="./brand/hilook.png" alt="HiLook" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/hikvision.png" width="4300" height="864" alt="HIKVISION" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/dahua.png" width="800" height="240" alt="Dahua" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/ezviz.png" width="750" height="253" alt="EZVIZ" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/tindy.webp" width="500" height="144" alt="Tiandy" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/ruijie.png" width="308" height="109" alt="Ruijie" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/tplink.png" width="322" height="137" alt="TP-Link" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/proview.png" width="225" height="91" alt="PROVIEW" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/imou.png" width="432" height="117" alt="IMOU" loading="lazy" /></span>
+          <span class="brand-pill"><img src="./brand/hilook.png" width="404" height="125" alt="HiLook" loading="lazy" /></span>
         </div>
       </div>
 
@@ -1074,7 +538,7 @@
             <div class="absolute -inset-3 bg-[#1fa2ff] opacity-[0.25] blur-[24px] rounded-[28px] z-0"></div>
             <div
               class="relative rounded-[20px] overflow-hidden aspect-square border border-[#1fa2ff]/10 shadow-[0_0_40px_rgba(0,0,0,0.6)] z-10 bg-[#111827]">
-              <img src="owner.jpeg" alt="Anwar Founder" class="w-full h-full object-cover relative z-10" />
+              <img src="./assets/img/owner.jpeg" width="864" height="1184" alt="Anwar Founder" loading="lazy" class="w-full h-full object-cover relative z-10" />
             </div>
           </div>
 
@@ -1405,14 +869,14 @@
         <div class="identity-card aspect-video">
           <a href="./images/kartu-nama.jpeg" class="glightbox" data-gallery="identitas"
             data-description="Kartu Nama Anwar Technology">
-            <img src="./images/kartu-nama.jpeg" alt="Kartu Nama Anwar Technology" loading="lazy" decoding="async" />
+            <img src="./images/kartu-nama.jpeg" width="3024" height="4032" alt="Kartu Nama Anwar Technology" loading="lazy" decoding="async" />
             <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
           </a>
         </div>
         <div class="identity-card aspect-video">
           <a href="./images/(1).jpeg" class="glightbox" data-gallery="identitas"
             data-description="Founder & Owner Anwar Technology">
-            <img src="./images/(1).jpeg" alt="Owner Anwar Technology" loading="lazy" decoding="async" />
+            <img src="./images/(1).jpeg" width="864" height="1184" alt="Owner Anwar Technology" loading="lazy" decoding="async" />
             <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
           </a>
         </div>
@@ -1420,14 +884,14 @@
         <div class="identity-card aspect-video">
           <a href="./images/(66).jpeg" class="glightbox" data-gallery="identitas"
             data-description="Kantor Anwar Technology">
-            <img src="./images/(66).jpeg" alt="Owner di Kantor" loading="lazy" decoding="async" />
+            <img src="./images/(66).jpeg" width="3024" height="4032" alt="Owner di Kantor" loading="lazy" decoding="async" />
             <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
           </a>
         </div>
         <div class="identity-card aspect-video">
           <a href="./images/(67).jpeg" class="glightbox" data-gallery="identitas"
             data-description="Banner & Brand Support Anwar Technology">
-            <img src="./images/(67).jpeg" alt="Banner Anwar Technology" loading="lazy" decoding="async" />
+            <img src="./images/(67).jpeg" width="3024" height="4032" alt="Banner Anwar Technology" loading="lazy" decoding="async" />
             <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
           </a>
         </div>
@@ -1437,7 +901,7 @@
       <div class="identity-card mt-5 md:mt-6" style="aspect-ratio: 21/9;" data-aos="fade-up" data-aos-delay="200">
         <a href="./images/(72).jpeg" class="glightbox" data-gallery="identitas"
           data-description="Banner Perusahaan Anwar Technology">
-          <img src="./images/(72).jpeg" alt="Banner Perusahaan" loading="lazy" decoding="async" />
+          <img src="./images/(72).jpeg" width="3024" height="4032" alt="Banner Perusahaan" loading="lazy" decoding="async" />
           <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
         </a>
       </div>
@@ -1465,37 +929,37 @@
         <a href="./images/(41).jpeg"
           class="glightbox gallery-thumb rounded-xl overflow-hidden relative group md:col-span-2 md:row-span-2 ring-1 ring-[#1fa2ff]/30 shadow-[0_0_20px_rgba(31,162,255,0.15)]"
           data-gallery="portfolio">
-          <img src="./images/(41).jpeg" alt="Proyek CCTV" loading="lazy" decoding="async"
+          <img src="./images/(41).jpeg" width="3024" height="4032" alt="Proyek CCTV" loading="lazy" decoding="async"
             class="w-full h-full object-cover" />
           <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
         </a>
         <a href="./images/(42).jpeg" class="glightbox gallery-thumb rounded-xl overflow-hidden relative group"
           data-gallery="portfolio">
-          <img src="./images/(42).jpeg" alt="Proyek Instalasi" loading="lazy" decoding="async"
+          <img src="./images/(42).jpeg" width="3024" height="4032" alt="Proyek Instalasi" loading="lazy" decoding="async"
             class="w-full h-full object-cover" />
           <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
         </a>
         <a href="./images/(43).jpeg" class="glightbox gallery-thumb rounded-xl overflow-hidden relative group"
           data-gallery="portfolio">
-          <img src="./images/(43).jpeg" alt="Proyek Instalasi" loading="lazy" decoding="async"
+          <img src="./images/(43).jpeg" width="4032" height="3024" alt="Proyek Instalasi" loading="lazy" decoding="async"
             class="w-full h-full object-cover" />
           <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
         </a>
         <a href="./images/(44).jpeg" class="glightbox gallery-thumb rounded-xl overflow-hidden relative group"
           data-gallery="portfolio">
-          <img src="./images/(44).jpeg" alt="Proyek Instalasi" loading="lazy" decoding="async"
+          <img src="./images/(44).jpeg" width="3024" height="4032" alt="Proyek Instalasi" loading="lazy" decoding="async"
             class="w-full h-full object-cover" />
           <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
         </a>
         <a href="./images/(45).jpeg" class="glightbox gallery-thumb rounded-xl overflow-hidden relative group"
           data-gallery="portfolio">
-          <img src="./images/(45).jpeg" alt="Proyek Instalasi" loading="lazy" decoding="async"
+          <img src="./images/(45).jpeg" width="3024" height="4032" alt="Proyek Instalasi" loading="lazy" decoding="async"
             class="w-full h-full object-cover" />
           <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
         </a>
         <a href="./images/(46).jpeg" class="glightbox gallery-thumb rounded-xl overflow-hidden relative group"
           data-gallery="portfolio">
-          <img src="./images/(46).jpeg" alt="Proyek Instalasi" loading="lazy" decoding="async"
+          <img src="./images/(46).jpeg" width="3024" height="4032" alt="Proyek Instalasi" loading="lazy" decoding="async"
             class="w-full h-full object-cover" />
           <div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>
         </a>
@@ -1511,116 +975,11 @@
     </div>
   </section>
 
-  <script>
-    (function () {
-      var data = [{ "p": "./images/(47).jpeg", "v": false }, { "p": "./images/(48).jpeg", "v": false }, { "p": "./images/(49).jpeg", "v": false }, { "p": "./images/(50).jpeg", "v": false }, { "p": "./images/(51).jpeg", "v": false }, { "p": "./images/(52).jpeg", "v": false }, { "p": "./images/(53).jpeg", "v": false }, { "p": "./images/(54).jpeg", "v": false }, { "p": "./images/(55).jpeg", "v": false }, { "p": "./images/(56).jpeg", "v": false }, { "p": "./images/(57).jpeg", "v": false }, { "p": "./images/(58).jpeg", "v": false }, { "p": "./images/(59).jpeg", "v": false }, { "p": "./images/(60).jpeg", "v": false }, { "p": "./images/(61).jpeg", "v": false }, { "p": "./images/(62).jpeg", "v": false }, { "p": "./images/(63).jpeg", "v": false }, { "p": "./images/(64).jpeg", "v": false }, { "p": "./images/(65).jpeg", "v": false }, { "p": "./images/(68).jpeg", "v": false }, { "p": "./images/(69).jpeg", "v": false }, { "p": "./images/(70).jpeg", "v": false }, { "p": "./images/(71).jpeg", "v": false }, { "p": "./images/(73).jpeg", "v": false }, { "p": "./images/(74).jpeg", "v": false }, { "p": "./images/(75).jpeg", "v": false }, { "p": "./images/(76).jpeg", "v": false }, { "p": "./images/(77).jpeg", "v": false }, { "p": "./images/(78).jpeg", "v": false }, { "p": "./images/(79).jpeg", "v": false }, { "p": "./images/(80).jpeg", "v": false }, { "p": "./images/(41).mp4", "v": true }, { "p": "./images/(42).mp4", "v": true }];
-      var grid = document.getElementById('gallery-grid');
-      var btn = document.getElementById('btn-load-more');
-      var wrap = document.getElementById('load-more-wrap');
-      var idx = 0;
-      var batch = 8;
+  
 
-      if (data.length === 0 && wrap) wrap.style.display = 'none';
+  
 
-      function loadMore() {
-        var frag = document.createDocumentFragment();
-        var end = Math.min(idx + batch, data.length);
-        for (var i = idx; i < end; i++) {
-          var a = document.createElement('a');
-          a.href = data[i].p;
-
-          // Zigzag masonry logic: every 6th item starting from index 6 or 9 gets col-span-2 row-span-2
-          // Note: initial block has 6 items (index 0-5), item 0 is already col-span-2.
-          // For newly loaded items, we want to alternate the position of the large block.
-          var isLarge = false;
-          if ((i - 6) % 6 === 0 || (i - 6) % 6 === 3) {
-            isLarge = true;
-          }
-
-          a.className = 'glightbox gallery-thumb rounded-xl overflow-hidden relative group ' + (isLarge ? 'md:col-span-2 md:row-span-2 ring-1 ring-[#1fa2ff]/30 shadow-[0_0_20px_rgba(31,162,255,0.15)]' : '');
-          a.setAttribute('data-gallery', 'portfolio');
-          if (data[i].v) {
-            a.setAttribute('data-type', 'video');
-            a.innerHTML = '<video src="' + data[i].p + '" class="w-full h-full object-cover" preload="metadata" muted></video><div class="absolute inset-0 bg-black/40 flex items-center justify-center"><i class="ph-fill ph-play-circle text-4xl text-white/80"></i></div>';
-          } else {
-            a.innerHTML = '<img src="' + data[i].p + '" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover" /><div class="gallery-overlay"><i class="ph-bold ph-arrows-out text-2xl text-white"></i></div>';
-          }
-          frag.appendChild(a);
-        }
-        grid.appendChild(frag);
-        idx = end;
-        if (idx >= data.length) wrap.style.display = 'none';
-        // Re-init GLightbox after adding new elements
-        if (window.galleryLightbox) window.galleryLightbox.destroy();
-        window.galleryLightbox = GLightbox({
-          selector: '.glightbox',
-          touchNavigation: true,
-          loop: true,
-          openEffect: 'fade',
-          closeEffect: 'fade',
-          cssEf498: 'fade',
-        });
-        window.galleryLightbox.on('open', function () { if (typeof lenis !== 'undefined') lenis.stop(); });
-        window.galleryLightbox.on('close', function () { if (typeof lenis !== 'undefined') lenis.start(); });
-      }
-
-      if (btn) btn.addEventListener('click', loadMore);
-    })();
-  </script>
-
-  <script>
-    // Tab switching for Paket Harga
-    function switchTab(tab) {
-      var tabs = ['cctv', 'indihome'];
-      tabs.forEach(function (t) {
-        var btn = document.getElementById('tab-' + t);
-        var panel = document.getElementById('panel-' + t);
-        if (t === tab) {
-          if (btn) { btn.classList.add('active'); }
-          if (panel) { panel.classList.remove('hidden'); }
-        } else {
-          if (btn) { btn.classList.remove('active'); }
-          if (panel) { panel.classList.add('hidden'); }
-        }
-      });
-    }
-
-    // GLightbox init for identitas gallery
-    document.addEventListener('DOMContentLoaded', function () {
-      if (typeof GLightbox !== 'undefined') {
-        var identitasLightbox = GLightbox({
-          selector: '[data-gallery="identitas"]',
-          touchNavigation: true,
-          loop: true,
-          openEffect: 'fade',
-          closeEffect: 'fade',
-        });
-        identitasLightbox.on('open', function () { if (typeof lenis !== 'undefined') lenis.stop(); });
-        identitasLightbox.on('close', function () { if (typeof lenis !== 'undefined') lenis.start(); });
-      }
-    });
-  </script>
-
-  <script>
-    // Brand marquee: touch-scrollable + infinite loop on mobile
-    (function() {
-      var wrap = document.querySelector('.brand-marquee-wrap');
-      var track = document.querySelector('.brand-track');
-      if (!wrap || !track) return;
-      wrap.addEventListener('touchstart', function() {
-        track.classList.add('touch-active');
-      }, { passive: true });
-      wrap.addEventListener('touchend', function() {
-        var half = wrap.scrollWidth / 2;
-        if (wrap.scrollLeft >= half) { wrap.scrollLeft -= half; }
-        track.classList.remove('touch-active');
-      }, { passive: true });
-      wrap.addEventListener('scroll', function() {
-        var half = wrap.scrollWidth / 2;
-        if (wrap.scrollLeft >= half) { wrap.scrollLeft -= half; }
-      }, { passive: true });
-    })();
-  </script>
+  
 
   <!-- Get in Touch -->
   <section class="py-24 relative z-10 border-t border-white/5 bg-dark-800/30">
@@ -1681,6 +1040,7 @@
         <!-- Google Map -->
         <div class="card-dark p-2 rounded-2xl min-h-[300px] h-full" data-aos="fade-left" data-aos-delay="200">
           <iframe
+            title="Lokasi Anwar Technology di Google Maps"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126581.33230303353!2d112.63931445!3d-7.44857475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e1b4db1b3ceb%3A0xea8647ac2b6fce7c!2sSidoarjo%2C%20Sidoarjo%20Regency%2C%20East%20Java!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid"
             class="w-full h-full min-h-[300px] rounded-xl filter grayscale contrast-125 opacity-80 mix-blend-luminosity hover:grayscale-0 hover:opacity-100 hover:mix-blend-normal transition-all duration-500"
             style="border: 0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
@@ -1701,10 +1061,10 @@
   </footer>
 
   <!-- Floating CS / Chat Icon using precise SVG and styles to match the mockup completely -->
-  <a href="https://wa.me/6281234567890" target="_blank"
+  <a href="https://wa.me/6281234567890" target="_blank" aria-label="Chat WhatsApp"
     class="fixed bottom-8 right-8 w-[60px] h-[60px] bg-[#0a0f16] border border-[#1fa2ff]/20 rounded-[22px] shadow-[0_0_25px_rgba(31,162,255,0.15)] flex items-center justify-center hover:shadow-[0_0_35px_rgba(31,162,255,0.3)] hover:border-[#1fa2ff]/40 hover:-translate-y-1 transition-all duration-300 z-[60] group cursor-pointer">
     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" viewBox="0 0 256 256"
-      class="text-[#1fa2ff] group-hover:scale-110 transition-transform duration-300">
+      class="text-[#1fa2ff] group-hover:scale-110 transition-transform duration-300" aria-hidden="true">
       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"
         d="M45.42,177A95.9,95.9,0,1,1,79,210.58l-37.45,11.24a8,8,0,0,1-10.18-10.18Z"></path>
     </svg>
@@ -1712,64 +1072,16 @@
 
   <!-- Lenis Smooth Scroll -->
   <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
-  <script>
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: "vertical",
-      gestureDirection: "vertical",
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-  </script>
+  
 
   <!-- GLightbox JS -->
   <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/js/glightbox.min.js"></script>
-  <script>
-    window.galleryLightbox = GLightbox({
-      selector: '.glightbox',
-      touchNavigation: true,
-      loop: true,
-      openEffect: 'fade',
-      closeEffect: 'fade',
-      cssEfects: {
-        fade: { in: 'fadeIn', out: 'fadeOut' },
-      },
-      preload: false,
-    });
-    // Pause Lenis when lightbox opens, resume on close
-    window.galleryLightbox.on('open', function () {
-      if (typeof lenis !== 'undefined') lenis.stop();
-    });
-    window.galleryLightbox.on('close', function () {
-      if (typeof lenis !== 'undefined') lenis.start();
-    });
-  </script>
+  
 
   <!-- AOS JS -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    // Set dynamic year
-    document.getElementById("current-year").textContent =
-      new Date().getFullYear();
-
-    // Initialize AOS
-    AOS.init({
-      once: true,
-      duration: 800,
-      offset: 50,
-    });
-  </script>
+  
+  <script src="./assets/js/main.js" defer></script>
 </body>
 
 </html>
