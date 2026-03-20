@@ -46,7 +46,44 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- Blog Articles -->
+  <!-- Kecamatan CCTV Pages -->
+  <url>
+    <loc>https://anwartechnology.com/cctv-waru-sidoarjo</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://anwartechnology.com/cctv-gedangan-sidoarjo</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://anwartechnology.com/cctv-taman-sidoarjo</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://anwartechnology.com/cctv-krian-sidoarjo</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://anwartechnology.com/cctv-sukodono-sidoarjo</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://anwartechnology.com/cctv-candi-sidoarjo</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <url>
     <loc>https://anwartechnology.com/blog/harga-cctv-sidoarjo-2025</loc>
     <lastmod>2026-03-20</lastmod>
