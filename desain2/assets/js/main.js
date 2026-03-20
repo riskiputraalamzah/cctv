@@ -119,24 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-/* --- Brand marquee: touch-scrollable + infinite loop on mobile --- */
-(function() {
-  var wrap = document.querySelector('.brand-marquee-wrap');
-  var track = document.querySelector('.brand-track');
-  if (!wrap || !track) return;
-  wrap.addEventListener('touchstart', function() {
-    track.classList.add('touch-active');
-  }, { passive: true });
-  wrap.addEventListener('touchend', function() {
-    var half = wrap.scrollWidth / 2;
-    if (wrap.scrollLeft >= half) { wrap.scrollLeft -= half; }
-    track.classList.remove('touch-active');
-  }, { passive: true });
-  wrap.addEventListener('scroll', function() {
-    var half = wrap.scrollWidth / 2;
-    if (wrap.scrollLeft >= half) { wrap.scrollLeft -= half; }
-  }, { passive: true });
-})();
+/* --- Brand marquee: pause on hover (CSS-only animation, no touch conflicts) --- */
 
 /* --- Lenis Smooth Scroll --- */
 var lenis = new Lenis({
@@ -158,28 +141,43 @@ function raf(time) {
 
 requestAnimationFrame(raf);
 
-/* --- Gallery GLightbox (global) --- */
-window.galleryLightbox = GLightbox({
-  selector: '.glightbox',
-  touchNavigation: true,
-  loop: true,
-  openEffect: 'fade',
-  closeEffect: 'fade',
-  cssEfects: {
-    fade: { in: 'fadeIn', out: 'fadeOut' },
-  },
-  preload: false,
-});
-window.galleryLightbox.on('open', function () {
-  if (typeof lenis !== 'undefined') lenis.stop();
-});
-window.galleryLightbox.on('close', function () {
-  if (typeof lenis !== 'undefined') lenis.start();
+/* --- Smooth scroll for anchor links (via Lenis) --- */
+document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+  anchor.addEventListener('click', function(e) {
+    var targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+    var target = document.querySelector(targetId);
+    if (target) {
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: -80, duration: 1.2 });
+    }
+  });
 });
 
+/* --- Gallery GLightbox (global) --- */
+if (typeof GLightbox !== 'undefined' && document.querySelector('.glightbox')) {
+  window.galleryLightbox = GLightbox({
+    selector: '.glightbox',
+    touchNavigation: true,
+    loop: true,
+    openEffect: 'fade',
+    closeEffect: 'fade',
+    cssEfects: {
+      fade: { in: 'fadeIn', out: 'fadeOut' },
+    },
+    preload: false,
+  });
+  window.galleryLightbox.on('open', function () {
+    if (typeof lenis !== 'undefined') lenis.stop();
+  });
+  window.galleryLightbox.on('close', function () {
+    if (typeof lenis !== 'undefined') lenis.start();
+  });
+}
+
 /* --- Set dynamic year --- */
-document.getElementById("current-year").textContent =
-  new Date().getFullYear();
+var yearEl = document.getElementById("current-year");
+if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 /* --- Initialize AOS --- */
 AOS.init({
@@ -187,3 +185,69 @@ AOS.init({
   duration: 800,
   offset: 50,
 });
+
+/* --- Sticky Navigation --- */
+(function() {
+  var nav = document.getElementById('main-nav');
+  if (!nav) return;
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 80) {
+      nav.classList.remove('nav-transparent');
+      nav.classList.add('nav-solid');
+    } else {
+      nav.classList.remove('nav-solid');
+      nav.classList.add('nav-transparent');
+    }
+  }, { passive: true });
+})();
+
+/* --- Mobile Menu Toggle --- */
+(function() {
+  var btn = document.getElementById('mobile-menu-btn');
+  var menu = document.getElementById('mobile-menu');
+  if (!btn || !menu) return;
+  btn.addEventListener('click', function() {
+    menu.classList.toggle('hidden');
+    var icon = btn.querySelector('i');
+    if (menu.classList.contains('hidden')) {
+      icon.className = 'ph ph-list text-2xl';
+    } else {
+      icon.className = 'ph ph-x text-2xl';
+    }
+  });
+  // Close mobile menu on link click
+  menu.querySelectorAll('a[href^="#"]').forEach(function(link) {
+    link.addEventListener('click', function() {
+      menu.classList.add('hidden');
+      var icon = btn.querySelector('i');
+      icon.className = 'ph ph-list text-2xl';
+    });
+  });
+})();
+
+/* --- FAQ Accordion --- */
+(function() {
+  var toggles = document.querySelectorAll('.faq-toggle');
+  toggles.forEach(function(toggle) {
+    toggle.addEventListener('click', function() {
+      var item = toggle.closest('.faq-item');
+      var answer = item.querySelector('.faq-answer');
+      var icon = toggle.querySelector('.faq-icon');
+      var isOpen = !answer.classList.contains('hidden');
+      // Close all
+      document.querySelectorAll('.faq-item').forEach(function(fi) {
+        fi.classList.remove('active');
+        fi.querySelector('.faq-answer').classList.add('hidden');
+        fi.querySelector('.faq-icon').classList.remove('rotated');
+        fi.querySelector('.faq-toggle').setAttribute('aria-expanded', 'false');
+      });
+      // Open clicked if it was closed
+      if (!isOpen) {
+        item.classList.add('active');
+        answer.classList.remove('hidden');
+        icon.classList.add('rotated');
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+})();

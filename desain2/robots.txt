@@ -1,0 +1,11 @@
+# Robots.txt for Anwar Technology
+# https://anwartechnology.com
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://anwartechnology.com/sitemap.xml
+
+# Crawl-delay (optional, be polite to servers)
+Crawl-delay: 1
