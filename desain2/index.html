@@ -65,6 +65,7 @@
         ],
         "sameAs": [
           "https://www.instagram.com/anwartechnology_",
+          "https://www.instagram.com/anwar_technology",
           "https://www.tiktok.com/@anwartechnology"
         ],
         "description": "Anwar Technology adalah penyedia layanan teknologi terpercaya spesialis instalasi CCTV, sistem jaringan internet wifi, sistem kelistrikan, dan gas medis di Sidoarjo Jawa Timur.",
@@ -673,6 +674,22 @@
             CCTV & Internet
           </div>
         </div>
+        <div class="klien-card sekolah" data-aos="fade-up" data-aos-delay="400">
+          <div
+            class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-violet-500/10 text-violet-400 flex items-center justify-center klien-icon">
+            <i class="ph-fill ph-student text-2xl"></i>
+          </div>
+          <h4 class="text-white font-bold text-base md:text-lg">
+            Universitas Anwar Medika
+          </h4>
+          <p class="text-gray-500 text-xs mt-1.5 uppercase tracking-wider">
+            Krian
+          </p>
+          <div
+            class="mt-3 inline-block px-3 py-1 rounded-full bg-violet-500/10 text-violet-400 text-[10px] font-semibold tracking-wide">
+            CCTV & Jaringan
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -770,17 +787,48 @@
           <i class="ph ph-arrow-up-right text-gray-500 icon-arrow transition-transform"></i>
         </a>
 
-        <a href="https://www.instagram.com/anwartechnology_?igsh=MTA3MTBoMTNmaHZucg==" target="_blank"
-          class="link-row flex items-center justify-between p-5 rounded-2xl bg-dark-800 border border-white/5"
-          data-aos="fade-up" data-aos-delay="200">
-          <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-full bg-[#E1306C]/10 text-[#E1306C] flex items-center justify-center">
-              <i class="ph-fill ph-instagram-logo text-xl"></i>
+        <!-- Instagram Dropdown -->
+        <div class="relative z-50" data-aos="fade-up" data-aos-delay="200">
+          <button id="ig-dropdown-btn" onclick="toggleIgDropdown(event)"
+            class="link-row flex items-center justify-between p-5 rounded-2xl bg-dark-800 border border-white/5 w-full text-left cursor-pointer">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full bg-[#E1306C]/10 text-[#E1306C] flex items-center justify-center">
+                <i class="ph-fill ph-instagram-logo text-xl"></i>
+              </div>
+              <span class="font-semibold text-gray-200">Instagram</span>
             </div>
-            <span class="font-semibold text-gray-200">Instagram</span>
+            <i class="ph ph-caret-down text-gray-500 transition-transform duration-300" id="ig-dropdown-icon"></i>
+          </button>
+          <!-- Dropdown Menu -->
+          <div id="ig-dropdown-menu"
+            class="ig-dropdown-menu absolute left-0 right-0 top-full mt-2 rounded-2xl border border-white/10 bg-[#0d1117]/95 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] z-50 overflow-hidden opacity-0 invisible translate-y-[-8px] transition-all duration-300">
+            <a href="https://www.instagram.com/anwar_technology" target="_blank" rel="noopener noreferrer"
+              class="flex items-center gap-4 px-5 py-4 hover:bg-white/5 transition-colors duration-200 border-b border-white/5">
+              <div
+                class="w-9 h-9 rounded-full bg-gradient-to-br from-[#833AB4] via-[#E1306C] to-[#F77737] flex items-center justify-center flex-shrink-0">
+                <i class="ph-fill ph-user text-white text-sm"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-white font-semibold text-sm">@anwar_technology</p>
+                <p class="text-gray-500 text-xs">Owner</p>
+              </div>
+              <i class="ph ph-arrow-up-right text-gray-500 text-sm"></i>
+            </a>
+            <a href="https://www.instagram.com/anwartechnology_?igsh=MTA3MTBoMTNmaHZucg==" target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-4 px-5 py-4 hover:bg-white/5 transition-colors duration-200">
+              <div
+                class="w-9 h-9 rounded-full bg-gradient-to-br from-[#405DE6] via-[#5851DB] to-[#833AB4] flex items-center justify-center flex-shrink-0">
+                <i class="ph-fill ph-buildings text-white text-sm"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-white font-semibold text-sm">@anwartechnology_</p>
+                <p class="text-gray-500 text-xs">Official</p>
+              </div>
+              <i class="ph ph-arrow-up-right text-gray-500 text-sm"></i>
+            </a>
           </div>
-          <i class="ph ph-arrow-up-right text-gray-500 icon-arrow transition-transform"></i>
-        </a>
+        </div>
 
         <a href="https://www.tiktok.com/@anwartechnology" target="_blank"
           class="link-row flex items-center justify-between p-5 rounded-2xl bg-dark-800 border border-white/5"
@@ -1786,8 +1834,15 @@
             </div>
             <div>
               <h4 class="text-white font-semibold mb-1">Media Sosial</h4>
+              <p class="text-gray-400 text-sm ">
+                Instagram: <a href="https://www.instagram.com/anwar_technology" target="_blank"
+                  class="text-brand-blue hover:underline">@anwar_technology</a> (Owner) · <a
+                  href="https://www.instagram.com/anwartechnology_" target="_blank"
+                  class="text-brand-blue hover:underline">@anwartechnology_</a> (Official)
+              </p>
               <p class="text-gray-400 text-sm">
-                Instagram: @anwartechnology_ | TikTok: @anwartechnology
+                TikTok: <a href="https://www.tiktok.com/@anwartechnology" target="_blank"
+                  class="text-brand-blue hover:underline">@anwartechnology</a>
               </p>
             </div>
           </div>

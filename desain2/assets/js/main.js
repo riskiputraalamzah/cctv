@@ -251,3 +251,35 @@ AOS.init({
     });
   });
 })();
+
+/* --- Instagram Dropdown Toggle --- */
+function toggleIgDropdown(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  var menu = document.getElementById('ig-dropdown-menu');
+  var icon = document.getElementById('ig-dropdown-icon');
+  if (!menu) return;
+  var isOpen = !menu.classList.contains('invisible');
+  if (isOpen) {
+    menu.classList.add('opacity-0', 'invisible', 'translate-y-[-8px]');
+    menu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+    if (icon) icon.style.transform = 'rotate(0deg)';
+  } else {
+    menu.classList.remove('opacity-0', 'invisible', 'translate-y-[-8px]');
+    menu.classList.add('opacity-100', 'visible', 'translate-y-0');
+    if (icon) icon.style.transform = 'rotate(180deg)';
+  }
+}
+
+// Close IG dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  var menu = document.getElementById('ig-dropdown-menu');
+  var btn = document.getElementById('ig-dropdown-btn');
+  var icon = document.getElementById('ig-dropdown-icon');
+  if (!menu || !btn) return;
+  if (!btn.contains(e.target) && !menu.contains(e.target)) {
+    menu.classList.add('opacity-0', 'invisible', 'translate-y-[-8px]');
+    menu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+    if (icon) icon.style.transform = 'rotate(0deg)';
+  }
+});

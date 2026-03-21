@@ -203,8 +203,10 @@ html::-webkit-scrollbar {
 .brand-track {
   display: flex;
   gap: 1.25rem;
-  animation: marquee 10s linear infinite;
+  width: max-content;
+  animation: marquee 25s linear infinite;
   will-change: transform;
+  transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
