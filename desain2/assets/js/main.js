@@ -96,16 +96,18 @@
     grid.appendChild(frag);
     idx = end;
     if (idx >= data.length) wrap.style.display = 'none';
-    if (window.galleryLightbox) window.galleryLightbox.destroy();
-    window.galleryLightbox = GLightbox({
-      selector: '.glightbox',
-      touchNavigation: true,
-      loop: true,
-      openEffect: 'fade',
-      closeEffect: 'fade',
-    });
-    window.galleryLightbox.on('open', function () { if (typeof lenis !== 'undefined') lenis.stop(); });
-    window.galleryLightbox.on('close', function () { if (typeof lenis !== 'undefined') lenis.start(); });
+    if (typeof GLightbox !== 'undefined') {
+      if (window.galleryLightbox) window.galleryLightbox.destroy();
+      window.galleryLightbox = GLightbox({
+        selector: '.glightbox',
+        touchNavigation: true,
+        loop: true,
+        openEffect: 'fade',
+        closeEffect: 'fade',
+      });
+      window.galleryLightbox.on('open', function () { if (typeof lenis !== 'undefined') lenis.stop(); });
+      window.galleryLightbox.on('close', function () { if (typeof lenis !== 'undefined') lenis.start(); });
+    }
   }
 
   if (btn) btn.addEventListener('click', loadMore);
@@ -145,24 +147,27 @@ document.addEventListener('DOMContentLoaded', function () {
 /* --- Brand marquee: pause on hover (CSS-only animation, no touch conflicts) --- */
 
 /* --- Lenis Smooth Scroll --- */
-var lenis = new Lenis({
-  duration: 1.2,
-  easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-  direction: "vertical",
-  gestureDirection: "vertical",
-  smooth: true,
-  mouseMultiplier: 1,
-  smoothTouch: false,
-  touchMultiplier: 2,
-  infinite: false,
-});
+var lenis = null;
+if (typeof Lenis !== 'undefined') {
+  lenis = new Lenis({
+    duration: 1.2,
+    easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+    direction: "vertical",
+    gestureDirection: "vertical",
+    smooth: true,
+    mouseMultiplier: 1,
+    smoothTouch: false,
+    touchMultiplier: 2,
+    infinite: false,
+  });
 
-function raf(time) {
-  lenis.raf(time);
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+
   requestAnimationFrame(raf);
 }
-
-requestAnimationFrame(raf);
 
 /* --- Smooth scroll for anchor links (via Lenis) --- */
 document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
@@ -172,7 +177,11 @@ document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
     var target = document.querySelector(targetId);
     if (target) {
       e.preventDefault();
-      lenis.scrollTo(target, { offset: -80, duration: 1.2 });
+      if (lenis) {
+        lenis.scrollTo(target, { offset: -80, duration: 1.2 });
+      } else {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   });
 });
@@ -202,12 +211,154 @@ if (typeof GLightbox !== 'undefined' && document.querySelector('.glightbox')) {
 var yearEl = document.getElementById("current-year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+/* --- Dynamic article dates and year labels --- */
+(function () {
+  var monthNames = [
+    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+  ];
+  var monthPattern = monthNames.join('|');
+  var now = new Date();
+  var currentYear = now.getFullYear();
+  var priceSlugPattern = /harga-cctv-sidoarjo-20\d{2}/g;
+  var currentPriceSlug = 'harga-cctv-sidoarjo-' + currentYear;
+  var previousMonthDate = new Date(currentYear, now.getMonth() - 1, 20);
+  var previousMonthName = monthNames[previousMonthDate.getMonth()];
+  var previousMonthYear = previousMonthDate.getFullYear();
+  var previousMonthLabel = previousMonthName + ' ' + previousMonthYear;
+  var publishedDateLabel = '20 ' + previousMonthLabel;
+  var isoPublishedDate = [
+    previousMonthDate.getFullYear(),
+    String(previousMonthDate.getMonth() + 1).padStart(2, '0'),
+    '20'
+  ].join('-');
+
+  function replaceDateText(value) {
+    if (!value || typeof value !== 'string') return value;
+    var result = value
+      .replace(new RegExp('\\b(\\d{1,2})\\s+(' + monthPattern + ')\\s+20\\d{2}\\b', 'g'), function (_, day) {
+        return day + ' ' + previousMonthLabel;
+      })
+      .replace(new RegExp('\\b(' + monthPattern + ')\\s+20\\d{2}\\b', 'g'), previousMonthLabel)
+      .replace(/\b20\d{2}\b/g, String(currentYear));
+    return result;
+  }
+
+  function replaceSlugText(value) {
+    if (!value || typeof value !== 'string') return value;
+    return value.replace(priceSlugPattern, currentPriceSlug);
+  }
+
+  function updateTextNodes(root) {
+    if (!root || !document.createTreeWalker) return;
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (node) {
+        var parentName = node.parentNode && node.parentNode.nodeName;
+        if (/^(SCRIPT|STYLE|NOSCRIPT|SVG)$/i.test(parentName)) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var node;
+    while ((node = walker.nextNode())) {
+      var nextValue = replaceDateText(node.nodeValue);
+      if (nextValue !== node.nodeValue) node.nodeValue = nextValue;
+    }
+  }
+
+  function updateAttributes() {
+    document.title = replaceDateText(document.title);
+    document.querySelectorAll('meta[content]').forEach(function (meta) {
+      meta.setAttribute('content', replaceSlugText(replaceDateText(meta.getAttribute('content'))));
+    });
+    document.querySelectorAll('a[href], link[href]').forEach(function (el) {
+      el.setAttribute('href', replaceSlugText(el.getAttribute('href')));
+    });
+    document.querySelectorAll('[title], [aria-label]').forEach(function (el) {
+      if (el.hasAttribute('title')) {
+        el.setAttribute('title', replaceDateText(el.getAttribute('title')));
+      }
+      if (el.hasAttribute('aria-label')) {
+        el.setAttribute('aria-label', replaceDateText(el.getAttribute('aria-label')));
+      }
+    });
+  }
+
+  function updateStructuredData() {
+    document.querySelectorAll('script[type="application/ld+json"]').forEach(function (script) {
+      var json;
+      try {
+        json = JSON.parse(script.textContent);
+      } catch (error) {
+        script.textContent = replaceDateText(script.textContent);
+        return;
+      }
+
+      function walk(value) {
+        if (Array.isArray(value)) return value.map(walk);
+        if (value && typeof value === 'object') {
+          Object.keys(value).forEach(function (key) {
+            if (key === 'datePublished' || key === 'dateModified') {
+              value[key] = isoPublishedDate;
+            } else {
+              value[key] = walk(value[key]);
+            }
+          });
+          return value;
+        }
+        return typeof value === 'string' ? replaceDateText(value) : value;
+      }
+
+      script.textContent = JSON.stringify(walk(json), null, 2);
+    });
+  }
+
+  function updateShareText() {
+    document.querySelectorAll('a[href]').forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (!href || !/[?&](text|title)=/.test(href)) return;
+
+      try {
+        var url = new URL(href, window.location.href);
+        ['text', 'title'].forEach(function (param) {
+          if (url.searchParams.has(param)) {
+            url.searchParams.set(param, replaceDateText(url.searchParams.get(param)));
+          }
+        });
+        link.setAttribute('href', url.toString());
+      } catch (error) {
+        link.setAttribute('href', replaceSlugText(replaceDateText(href)));
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    updateTextNodes(document.body);
+    updateAttributes();
+    updateStructuredData();
+    updateShareText();
+
+    document.querySelectorAll('[data-current-year]').forEach(function (el) {
+      el.textContent = currentYear;
+    });
+    document.querySelectorAll('[data-previous-month-year]').forEach(function (el) {
+      el.textContent = previousMonthLabel;
+    });
+    document.querySelectorAll('[data-published-date]').forEach(function (el) {
+      el.textContent = publishedDateLabel;
+    });
+  });
+})();
+
 /* --- Initialize AOS --- */
-AOS.init({
-  once: true,
-  duration: 800,
-  offset: 50,
-});
+if (typeof AOS !== 'undefined') {
+  AOS.init({
+    once: true,
+    duration: 800,
+    offset: 50,
+  });
+}
 
 /* --- Sticky Navigation --- */
 (function() {
